@@ -1,0 +1,129 @@
+{
+    "author": "Hanna Diggins (Industrial Illusions)",
+    "dependencies": {
+        "kiezelpay-core": "^2.1.2",
+        "pebble-clay": "^1.0.3"
+    },
+    "keywords": [],
+    "name": "pocketboy",
+    "pebble": {
+        "capabilities": [
+            "configurable",
+            "health"
+        ],
+        "displayName": "PocketBoy",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "TextColor",
+            "DisconnectVibrate",
+            "Date",
+            "PocketBoyType",
+            "BackgroundColor",
+            "BluetoothType"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/PoketBoyPlaystation.png",
+                    "name": "GameBoyPlaystation_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/PoketBoySwitch.png",
+                    "name": "GameBoySwitch_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/PocketBoyXboxBlack.png",
+                    "name": "GameBoyXboxBlack_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/PoketBoyXboxWhite",
+                    "name": "GameBoyXboxWhite_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "fonts/Pyrite",
+                    "name": "Pyrite_Font_20",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "images/GameBoy GameCube",
+                    "name": "GameBoyGameCube_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Gameboy Famicom",
+                    "name": "GameBoyFamicom_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/GameBoy Wii",
+                    "name": "GameBoyWii_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/GameBoy NES",
+                    "name": "GameBoyNES_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Gameboy SNES",
+                    "name": "GameBoySNES_Image",
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt",
+                        "diorite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "fonts/Pixel",
+                    "name": "Pixel_Font_28",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel",
+                    "name": "Pixel_Font_18",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel",
+                    "name": "Pixel_Font_36",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "images/GameBoy",
+                    "name": "GameBoyClassic_Image",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "diorite"
+        ],
+        "uuid": "02804d47-3f57-434e-9caa-9953742c5d05",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "3.0.0"
+}
