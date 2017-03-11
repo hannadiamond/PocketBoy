@@ -23,6 +23,8 @@ static TextLayer *s_battery_layer;
 static TextLayer *s_connection_layer;
 static TextLayer *s_step_layer;
 
+static char PersistDisconnectVibrate[] = "0";  //<================
+static char PersistDate[] = "0";  //<================
 static char PersistPocketBoyType[] = "0";  //<================
 
 
@@ -33,10 +35,10 @@ ClaySettings settings;
 // Initialize the default settings
 static void prv_default_settings() {
   settings.BackgroundColor = GColorBlack;
-  settings.Date = "0";
-  settings.DisconnectVibrate = "0";
-  strcpy(PersistPocketBoyType,  "0");              //<================
   settings.TextColor = GColorWhite;
+  strcpy(PersistDisconnectVibrate, "0");
+  strcpy(PersistDisconnectVibrate, "0");
+  strcpy(PersistPocketBoyType,  "0");              //<================
   
  
 }
@@ -52,14 +54,21 @@ static void prv_load_settings() {
      persist_read_string(MESSAGE_KEY_PocketBoyType, PersistPocketBoyType, sizeof(PersistPocketBoyType));
       APP_LOG(APP_LOG_LEVEL_INFO, "In Load Settings : PersistPocketBoyType = %s", PersistPocketBoyType);
    }
+   if(persist_exists(MESSAGE_KEY_DisconnectVibrate)) {                        //<================
+     persist_read_string(MESSAGE_KEY_DisconnectVibrate, PersistDisconnectVibrate, sizeof(PersistDisconnectVibrate));
+   }
+  if(persist_exists(MESSAGE_KEY_Date)) {                        //<================
+     persist_read_string(MESSAGE_KEY_Date, PersistDate, sizeof(PersistDate));
+   }
 }
 
 
 // Save the settings to persistent storage
 static void prv_save_settings() {
   persist_write_data(SETTINGS_KEY, &settings, sizeof(settings));
-  
   persist_write_string(MESSAGE_KEY_PocketBoyType, PersistPocketBoyType);  //<================
+  persist_write_string(MESSAGE_KEY_DisconnectVibrate, PersistDisconnectVibrate);  //<================
+  persist_write_string(MESSAGE_KEY_Date, PersistDate);  //<================
   // Update the display based on new settings
   prv_update_display();
 }
@@ -93,8 +102,7 @@ static void background(){
 // Update the display elements
 static void prv_update_display() {
   // Background color
-  window_set_background_color(s_main_window, settings.BackgroundColor);
-  
+  window_set_background_color(s_main_window, settings.BackgroundColor); 
   background();
 
   // Text Color
@@ -118,24 +126,23 @@ static void prv_update_display() {
   text_layer_set_text(s_time_layer, s_buffer);
   
   // Show the date
-  int select_date = atoi(settings.Date);
-  if(select_date == 0) {
+  if(strcmp(PersistDate, "0") == 0) {
     static char date_buffer[40];
     strftime(date_buffer, sizeof(date_buffer), "%a %b %d", tick_time);
     text_layer_set_text(s_date_layer, date_buffer);
-  } else if(select_date == 1) {
+  } else if(strcmp(PersistDate, "1")== 1) {
     static char date_buffer[40];
     strftime(date_buffer, sizeof(date_buffer), "%b %d, %Y", tick_time );
     text_layer_set_text(s_date_layer, date_buffer);    
-  } else if(select_date == 2) {
+  } else if(strcmp(PersistDate, "2") == 2) {
     static char date_buffer[40];
     strftime(date_buffer, sizeof(date_buffer), "%D", tick_time );
     text_layer_set_text(s_date_layer, date_buffer);  
-  } else if (select_date == 3) {
+  } else if (strcmp(PersistDate, "3") == 3) {
     static char date_buffer[40];
     strftime(date_buffer, sizeof(date_buffer), "%a %D", tick_time );
     text_layer_set_text(s_date_layer, date_buffer);  
-  } else if (select_date == 4) {
+  } else if (strcmp(PersistDate, "4") == 4) {
     static char date_buffer[40];
     strftime(date_buffer, sizeof(date_buffer), "%a %D", tick_time );
     text_layer_set_text(s_date_layer, date_buffer);  
@@ -153,10 +160,7 @@ static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) 
      strcpy(PersistPocketBoyType, "0"); //<================
   }
     APP_LOG(APP_LOG_LEVEL_INFO, "In InboxReceived: PersistPocketBoy = %s", PersistPocketBoyType);
-	
-  if(type_select_t) { 
-    settings.PocketBoyType = type_select_t->value->cstring; 
-  }
+
   // Background Color
   Tuple *bg_color_t = dict_find(iter, MESSAGE_KEY_BackgroundColor);
   if (bg_color_t) {
@@ -170,12 +174,16 @@ static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) 
    // Disconnect Vibrations
   Tuple *disconnect_vibratate_t = dict_find(iter, MESSAGE_KEY_DisconnectVibrate);
   if (disconnect_vibratate_t) {
-    settings.DisconnectVibrate = disconnect_vibratate_t->value->cstring;
+    strcpy(PersistDisconnectVibrate, disconnect_vibratate_t->value->cstring);
+  }else {
+     strcpy(PersistDisconnectVibrate, "0"); //<================
   }
   //Date
   Tuple *bp_select_t = dict_find(iter, MESSAGE_KEY_Date);
 	if(bp_select_t) { 
-    settings.Date = bp_select_t->value->cstring; 
+    strcpy(PersistDate, bp_select_t->value->cstring); 
+  }else {
+     strcpy(PersistDate, "0"); //<================
   }
   // Save the new settings to persistent storage
   prv_save_settings();
@@ -230,17 +238,16 @@ static void handle_bluetooth(bool connected) {
 }
 
 static void bluetooth_callback(bool connected) {
-  int select_vibrate = atoi(settings.DisconnectVibrate);
 	if(!connected) {
-			if(select_vibrate == 0) {
+			if(strcmp(PersistDisconnectVibrate, "0") == 0) {
       }								// No vibration 
-			else if(select_vibrate == 1) {
+			else if(strcmp(PersistDisconnectVibrate, "1") == 1) {
         vibes_short_pulse(); 
       }		// Short vibration
-			else if(select_vibrate == 2) {
+			else if(strcmp(PersistDisconnectVibrate, "2") == 2) {
         vibes_long_pulse(); 
       }		// Long vibration
-			else if(select_vibrate == 3) { 
+			else if(strcmp(PersistDisconnectVibrate, "3") == 3) { 
         vibes_double_pulse(); 
       }	// Double vibration					
 	} 
