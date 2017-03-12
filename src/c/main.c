@@ -1,7 +1,7 @@
 #include <pebble.h>
 #include "main.h"
 #include <pebble-events/pebble-events.h>
-#include <kiezelpay-core/kiezelpay.h>
+
 
 static Window *s_main_window;
 
@@ -357,7 +357,7 @@ static void prv_main_window_unload(Window *window) {
 }
 
 static void prv_init() {
- // kiezelpay_init();
+
   events_app_message_open();
   
   prv_load_settings();
@@ -391,7 +391,7 @@ tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 static void prv_deinit() {
   // Destroy Window
   window_destroy(s_main_window);
-  kiezelpay_deinit();
+
 }
 
 int main(void) {
