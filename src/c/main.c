@@ -47,9 +47,8 @@ static void prv_default_settings() {
 static void prv_load_settings() {
   // Load the default settings
   prv_default_settings();
-    // Read settings from persistent storage, if they exist
+  // Read settings from persistent storage, if they exist
   persist_read_data(SETTINGS_KEY, &settings, sizeof(settings));
-  
   if(persist_exists(MESSAGE_KEY_PocketBoyType)) {                        //<================
      persist_read_string(MESSAGE_KEY_PocketBoyType, PersistPocketBoyType, sizeof(PersistPocketBoyType));
       APP_LOG(APP_LOG_LEVEL_INFO, "In Load Settings : PersistPocketBoyType = %s", PersistPocketBoyType);
@@ -75,7 +74,7 @@ static void prv_save_settings() {
 
 static void background(){
   gbitmap_destroy(s_terminal_bitmap);
-   if(strcmp(PersistPocketBoyType, "0")==0){
+  if(strcmp(PersistPocketBoyType, "0")==0){
   s_terminal_bitmap = gbitmap_create_with_resource(RESOURCE_ID_GameBoyClassic_Image);
   } else if(strcmp(PersistPocketBoyType, "1") == 1) {
   s_terminal_bitmap = gbitmap_create_with_resource(RESOURCE_ID_GameBoyNES_Image);

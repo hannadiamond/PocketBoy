@@ -1,7 +1,6 @@
 {
     "author": "Hanna Diggins (Industrial Illusions)",
     "dependencies": {
-        "kiezelpay-core": "^2.1.2",
         "pebble-clay": "^1.0.3"
     },
     "keywords": [],
@@ -18,8 +17,7 @@
             "DisconnectVibrate",
             "Date",
             "PocketBoyType",
-            "BackgroundColor",
-            "BluetoothType"
+            "BackgroundColor"
         ],
         "projectType": "native",
         "resources": {
